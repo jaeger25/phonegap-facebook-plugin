@@ -3,7 +3,14 @@ var cordova = window.cordova || window.Cordova;
 CDV.FB = {
     _emptyFn: function() {},
     init: function (apiKey, fail) {
-        cordova.exec(this._emptyFn, (fail ? fail : null), "org.apache.cordova.facebook.Connect", "init", [apiKey]);
+        cordova.exec(function () {
+            Parse.FacebookUtils.init({
+                appId: BuddyBank.app.facebookAppId,
+                logging: false,
+                status: false,
+                cookie: true
+            });
+        }, (fail ? fail : null), "org.apache.cordova.facebook.Connect", "init", [apiKey]);
     },
     login: function (params, cb, fail) {
         params = params || { scope: "" };
