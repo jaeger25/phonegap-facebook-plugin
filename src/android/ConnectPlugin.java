@@ -209,7 +209,7 @@ public class ConnectPlugin extends CordovaPlugin {
             "\"authResponse\": {"+
               "\"accessToken\": \""+facebook.getAccessToken()+"\","+
               "\"expiresIn\": \""+expiresIn+"\","+
-              "\"expirationDate\: \""+ facebook.getAccessExpires()+"\","+
+              "\"expirationDate\": \""+ facebook.getAccessExpires()+"\","+
               "\"session_key\": true,"+
               "\"sig\": \"...\","+
               "\"userId\": \""+this.userId+"\""+
