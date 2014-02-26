@@ -8,17 +8,22 @@ CDV.FB = {
     login: function (params, cb, fail) {
         params = params || { scope: "" };
         cordova.exec(function (e) { // login
-            Parse.FacebookUtils.logIn({
-                id: e.authResponse.userId,
-                access_token: e.authResponse.accessToken,
-                expiration_date: e.authResponse.expirationDate
-            }).then(
-                function (user) {
-                    if (cb) cb(user);
-                },
-                function (error) {
-                    if (fail) fail();
-                });
+            if (e.authResponse && e.authResponse.expiresIn) {
+                Parse.FacebookUtils.logIn({
+                    id: e.authResponse.userId,
+                    access_token: e.authResponse.accessToken,
+                    expiration_date: e.authResponse.expirationDate
+                }).then(
+                    function (user) {
+                        if (cb) cb(user);
+                    },
+                    function (error) {
+                        if (fail) fail(error.message);
+                    });
+            }
+            else {
+                if (cb) cb(null);
+            }
         }, (fail ? fail : null), "org.apache.cordova.facebook.Connect", "login", params.scope.split(","));
     },
     logout: function (cb, fail) {
